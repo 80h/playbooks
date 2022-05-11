@@ -1,0 +1,21 @@
+---
+- name: Install Pycharm Community Edition
+  hosts: localhost
+  gather_facts: yes
+
+  tasks:
+    - name: Create pycharm directory
+      file:
+        path: /opt/pycharm
+        owner: "{{ ansible_effective_user_id }}"
+        group: "{{ ansible_effective_group_id }}"
+        state: directory
+      become: yes
+      register: pycharm_directory
+
+    - name: Downloading and unpacking files
+      unarchive:
+        src: https://download.jetbrains.com/python/pycharm-community-2022.1.tar.gz
+        dest: /opt/pycharm/
+        remote_src: yes
+      when: pycharm_directory.changed
