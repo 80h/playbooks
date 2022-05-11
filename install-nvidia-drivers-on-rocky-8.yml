@@ -1,0 +1,27 @@
+---
+- name: Install Nvidia drivers on Rocky 8
+  hosts: localhost
+  gather_facts: no
+  become: yes
+
+  tasks:
+  - name: Install EPEL repository
+    dnf:
+      name: epel-release
+      state: latest
+
+  - name: Install CUDA repository
+    yum_repository:
+      name: cuda-rhel8-x86_64       
+      description: cuda-rhel8-x86_64
+      baseurl: https://developer.download.nvidia.com/compute/cuda/repos/rhel8/x86_64
+      enabled: yes
+      gpgcheck: yes
+      gpgkey: https://developer.download.nvidia.com/compute/cuda/repos/rhel8/x86_64/D42D0685.pub
+      
+  - name: Install packages
+    dnf:
+      name:
+        - nvidia-driver
+        - nvidia-settings
+        - cuda-driver 
