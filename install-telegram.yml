@@ -1,0 +1,21 @@
+---
+- name: Install Telegram
+  hosts: localhost
+  gather_facts: yes
+
+  tasks:
+    - name: Create Telegram directory
+      file:
+        path: /opt/telegram
+        owner: "{{ ansible_effective_user_id }}"
+        group: "{{ ansible_effective_group_id }}"
+        state: directory
+      become: yes
+      register: telegram_directory
+
+    - name: Downloading and unpacking files
+      unarchive:
+        src: https://updates.tdesktop.com/tlinux/tsetup.3.7.3.tar.xz
+        dest: /opt/telegram/
+        remote_src: yes
+      when: telegram_directory.changed
