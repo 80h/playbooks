@@ -15,9 +15,9 @@
       name: cuda-rhel8-x86_64       
       description: cuda-rhel8-x86_64
       baseurl: https://developer.download.nvidia.com/compute/cuda/repos/rhel8/x86_64
-      enabled: yes
-      gpgcheck: yes
       gpgkey: https://developer.download.nvidia.com/compute/cuda/repos/rhel8/x86_64/D42D0685.pub
+      gpgcheck: yes
+      enabled: yes
       
   - name: Install packages
     dnf:
