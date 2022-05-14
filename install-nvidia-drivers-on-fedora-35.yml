@@ -1,0 +1,23 @@
+---
+- name: Install Nvidia drivers on Fedora 35
+  hosts: localhost
+  gather_facts: no
+  become: yes
+
+  tasks:
+  - name: Install CUDA repository
+    yum_repository:
+      name: cuda-rhel8-x86_64       
+      description: cuda-rhel8-x86_64
+      baseurl: https://developer.download.nvidia.com/compute/cuda/repos/fedora35/x86_64/
+      gpgkey: https://developer.download.nvidia.com/compute/cuda/repos/fedora35/x86_64/D42D0685.pub
+      gpgcheck: yes
+      enabled: yes
+
+      
+  - name: Install packages
+    dnf:
+      name:
+        - nvidia-driver
+        - nvidia-settings
+        - cuda-driver 
